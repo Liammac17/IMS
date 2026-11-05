@@ -1,0 +1,36 @@
+﻿@page "/"
+
+
+@inject IViewInventoryByName ViewInventoryByName
+
+<PageTitle>Test Page</PageTitle>
+
+<br />
+<br />
+<br />
+
+<ul>
+    @if (inventories is not null && inventories.Count > 0)
+    {
+        foreach (var inv  in inventories)
+        {
+            <li>
+                @inv.InventoryName
+            </li>
+        }
+
+    }
+</ul>
+
+
+
+@code {
+    private List<Inventory>? inventories;
+
+    protected override async Task OnInitializedAsync()
+    {
+        //need async and to list converts Ienumerable to List
+        inventories = (await ViewInventoryByName.ExecuteAsync()).ToList();
+    }
+
+}
